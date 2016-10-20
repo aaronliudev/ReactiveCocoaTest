@@ -72,22 +72,26 @@
     self.tabBarController.viewControllers = allControllers;
     self.tabBarController.selectedIndex = 2;
     
+    [ALSharedAppDelegate.navigationStack pushNavigationController:[allControllers objectAtIndex:2]];
+    
     [[self rac_signalForSelector:@selector(tabBarController:didSelectViewController:)] subscribeNext:^(RACTuple *tuple) {
         [ALSharedAppDelegate.navigationStack popNavigationController];
         [ALSharedAppDelegate.navigationStack pushNavigationController:tuple.second];
     }];
+    self.tabBarController.delegate = self;
 }
 
 - (ALNavigationController *)addChildVc:(ALBaseViewController *)vc title:(NSString *)title imageName:(NSString *)imgName selectImageName:(NSString *)selectImgName
 {
-    ALNavigationController *navc = [[ALNavigationController alloc] initWithRootViewController:vc];
     
     UIImage *image = [[UIImage imageNamed:imgName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIImage *selectImage = [[UIImage imageNamed:selectImgName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    navc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:image selectedImage:selectImage];
+    vc.tabBarItem = [[UITabBarItem alloc] initWithTitle:title image:image selectedImage:selectImage];
     
-    [navc.tabBarItem setTitleTextAttributes:@{ NSForegroundColorAttributeName : HexRGB(0xda372a)} forState:UIControlStateSelected];
-    [navc.tabBarItem setTitleTextAttributes:@{ NSForegroundColorAttributeName : HexRGB(0x696969) } forState:UIControlStateNormal];
+    [vc.tabBarItem setTitleTextAttributes:@{ NSForegroundColorAttributeName : HexRGB(0xda372a)} forState:UIControlStateSelected];
+    [vc.tabBarItem setTitleTextAttributes:@{ NSForegroundColorAttributeName : HexRGB(0x696969) } forState:UIControlStateNormal];
+    
+    ALNavigationController *navc = [[ALNavigationController alloc] initWithRootViewController:vc];
     
     return navc;
 }

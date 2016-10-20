@@ -20,6 +20,14 @@
 #import <SSKeychain/SSKeychain.h>
 #import <SFHFKeychainUtils.h>
 #import <YYKit.h>
+#import <OctoKit.h>
+#import <IQKeyboardManager.h>
+#import <Appirater.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <Vertigo/TGRImageViewController.h>
+#import <Vertigo/TGRImageZoomAnimationController.h>
+#import <BlocksKit.h>
+#import <SVPullToRefresh/SVPullToRefresh.h>
 
 #import "SSKeychain+Util.h"
 
@@ -32,7 +40,6 @@
 #import "ALNavigationController.h"
 #import "ALTabBarController.h"
 #import "ALViewControllerRouter.h"
-#import "Account.h"
 
 
 

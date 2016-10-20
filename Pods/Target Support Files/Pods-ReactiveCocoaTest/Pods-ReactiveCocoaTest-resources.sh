@@ -80,10 +80,16 @@ EOM
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "$PODS_CONFIGURATION_BUILD_DIR/Appirater/Appirater.bundle"
+  install_resource "IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle"
   install_resource "SSKeychain/Support/SSKeychain.bundle"
+  install_resource "Vertigo/Vertigo/TGRImageViewController.xib"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "$PODS_CONFIGURATION_BUILD_DIR/Appirater/Appirater.bundle"
+  install_resource "IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle"
   install_resource "SSKeychain/Support/SSKeychain.bundle"
+  install_resource "Vertigo/Vertigo/TGRImageViewController.xib"
 fi
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

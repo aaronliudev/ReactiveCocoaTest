@@ -10,7 +10,9 @@
 
 @interface ALLoginViewModel : ALBaseModel
 
-@property (nonatomic, strong) Account *account;
+@property (nonatomic, copy) NSString *username;
+@property (nonatomic, copy) NSString *password;
+
 @property (nonatomic, strong, readonly) RACCommand *loginCommand;
 @property (nonatomic, strong, readonly) RACSignal *loginBtnEnableSignal;
 

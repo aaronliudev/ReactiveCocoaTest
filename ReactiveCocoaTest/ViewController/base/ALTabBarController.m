@@ -26,15 +26,18 @@
     [self.view addSubview:self.tabBarController.view];
 }
 
-- (BOOL)shouldAutorotate {
+- (BOOL)shouldAutorotate
+{
     return self.tabBarController.selectedViewController.shouldAutorotate;
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
+{
     return self.tabBarController.selectedViewController.supportedInterfaceOrientations;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
     return self.tabBarController.selectedViewController.preferredStatusBarStyle;
 }
 

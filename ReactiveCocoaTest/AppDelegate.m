@@ -26,7 +26,8 @@
     // Override point for customization after application launch.
     
     
-    
+    [self configureKeyboardManager];
+    [OCTClient setClientID:AL_CLIENT_ID clientSecret:AL_CLIENT_SECRET];
     
     self.service = [[ALModelServiceImpl alloc] init];
     self.navigationStack = [[ALNavigationStack alloc] initWith:self.service];
@@ -34,6 +35,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     [(ALModelServiceImpl *)self.service resetRootViewModel:[self configKeyWindowModel]];
+    
     [self.window makeKeyAndVisible];
     
     return YES;
@@ -63,12 +65,23 @@
 
 - (ALBaseModel *)configKeyWindowModel
 {
-    if ([SSKeychain rawLogin].length && [SSKeychain accessToken].length) {
-        self.service.account.account = [SSKeychain rawLogin];
-        self.service.account.accessToken = [SSKeychain accessToken];
+//    if ([SSKeychain rawLogin].length && [SSKeychain accessToken].length)
+    {
+    
+//        OCTUser *user = [OCTUser userWithRawLogin:[SSKeychain rawLogin] server:[OCTServer dotComServer]];
+//        OCTClient *client = [OCTClient authenticatedClientWithUser:user token:[SSKeychain accessToken]];
+//        self.service.client = client;
+        
         return [[ALHomePageViewModel alloc] initWithServices:self.service];
     }
-    return [[ALLoginViewModel alloc] initWithServices:self.service];
+//    return [[ALLoginViewModel alloc] initWithServices:self.service];
+}
+
+- (void)configureKeyboardManager
+{
+    IQKeyboardManager.sharedManager.enable = YES;
+    IQKeyboardManager.sharedManager.enableAutoToolbar = NO;
+    IQKeyboardManager.sharedManager.shouldResignOnTouchOutside = YES;
 }
 
 @end

@@ -10,15 +10,13 @@
 
 @implementation ALModelServiceImpl
 
-@synthesize account = _account;
-@synthesize strTest = _strTest;
+@synthesize client = _client;
 
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        self.account = [[Account alloc] init];
-        self.strTest = @"test...";
+        
     }
     return self;
 }

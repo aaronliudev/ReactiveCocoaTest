@@ -22,36 +22,27 @@
 
 @implementation ALLoginViewModel
 
-- (Account *)account
-{
-    if (!_account) _account = [[Account alloc] init];
-    return _account;
-}
 
 - (void)configViewModelHook
 {
-    _loginBtnEnableSignal = [[RACSignal combineLatest:@[RACObserve(self.account, account),
-                                                       RACObserve(self.account, pswd)]
+    _loginBtnEnableSignal = [[RACSignal combineLatest:@[RACObserve(self, username),
+                                                       RACObserve(self, password)]
                                               reduce:^id(NSString *account, NSString *pswd){
                                                   return @(account.length > 0 && pswd.length > 0);
                                               }] distinctUntilChanged];
     @weakify(self);
-    _loginCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+    _loginCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id x) {
         @strongify(self);
-        return  [[self requestLogin] doNext:^(id x) {
+        return  [[self requestLogin] doNext:^(OCTClient *client) {
             
-            SSKeychain.rawLogin = self.account.account;
-            SSKeychain.password = self.account.pswd;
-            SSKeychain.accessToken = @"ajkfal123jhjhh14ae45";
+            SSKeychain.rawLogin = client.user.rawLogin;
+            SSKeychain.password = self.password;
+            SSKeychain.accessToken = client.token;
             NSLog(@"登录成功");
             
             ALHomePageViewModel *homePage = [[ALHomePageViewModel alloc] initWithServices:self.services];
             [self.services resetRootViewModel:homePage];
             
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                NSLog(@"密码是：－－－－－%@－－－－－－",[SSKeychain password]);
-                
-            });
         }];
     }];
     
@@ -59,41 +50,10 @@
 
 - (RACSignal *)requestLogin
 {
-//    return [[RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-//        
-//        static int i = 0;
-//        if (i == 5) {
-//            [subscriber sendNext:@"123"];
-//            [subscriber sendCompleted];
-//        }
-//        else {
-//            [subscriber sendError:nil];
-//            NSLog(@"xxxxxx");
-//            i ++;
-//        }
-//        
-//        return [RACDisposable disposableWithBlock:^{
-//            
-//        }];
-//        
-//    }] retry];
+    OCTUser *user = [OCTUser userWithRawLogin:self.username server:OCTServer.dotComServer];
     
-    [[ALNetworkEngine shareEngine] requestData];
+    return [OCTClient signInAsUser:user password:self.password oneTimePassword:nil scopes:OCTClientAuthorizationScopesUser | OCTClientAuthorizationScopesRepository];
     
-    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            if (1) {
-                [subscriber sendNext:@"123"];
-                [subscriber sendCompleted];
-            }
-            else {
-                [subscriber sendError:nil];
-            }
-        });
-        
-        return nil;
-    }];
 }
 
 @end

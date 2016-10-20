@@ -24,8 +24,7 @@
 + (NSString *)accessToken
 {
 #ifdef DEBUG
-//    return [[NSUserDefaults standardUserDefaults] objectForKey:AL_ACCESS_TOKEN];
-    return nil;
+    return [[NSUserDefaults standardUserDefaults] objectForKey:AL_ACCESS_TOKEN];
 #else
     return [SFHFKeychainUtils getPasswordForUsername:AL_ACCESS_TOKEN andServiceName:AL_SERVICE_NAME error:nil];
 #endif

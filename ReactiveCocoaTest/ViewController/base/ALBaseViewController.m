@@ -20,11 +20,11 @@
 {
     ALBaseViewController *baseVc = [super allocWithZone:zone];
     
-    @weakify(baseVc);
-    [[(NSObject *)baseVc rac_signalForSelector:@selector(viewDidLoad)] subscribeNext:^(id x) {
-        @strongify(baseVc);
-        [baseVc configViewModelHook];
-    }];
+//    @weakify(baseVc);
+//    [[(NSObject *)baseVc rac_signalForSelector:@selector(viewDidLoad)] subscribeNext:^(id x) {
+//        @strongify(baseVc);
+//        [baseVc configViewModelHook];
+//    }];
     return baseVc;
 }
 
@@ -39,6 +39,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self configViewModelHook];
     // Do any additional setup after loading the view.
 }
 
@@ -63,6 +65,7 @@
 {
     
 }
+
 /*
 #pragma mark - Navigation
 

@@ -11,7 +11,6 @@
 
 @protocol ALModelServices <NSObject, ALModelProtrocl>
 
-@property (nonatomic, strong) Account *account;
-@property (nonatomic, copy) NSString *strTest;
+@property (nonatomic, strong) OCTClient *client;
 
 @end

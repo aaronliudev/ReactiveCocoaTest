@@ -8,13 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		7A11CE50782F76A319CED4BD /* libPods-ReactiveCocoaTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99EE0D829C686C95E61522E6 /* libPods-ReactiveCocoaTest.a */; };
+		E70EBD4C1DACD5F100FE65FA /* ALPullHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E70EBD4B1DACD5F100FE65FA /* ALPullHeaderView.m */; };
+		E70EBD4F1DACEEF400FE65FA /* UITableView+ALPullHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E70EBD4E1DACEEF400FE65FA /* UITableView+ALPullHeaderView.m */; };
+		E70EBD521DAD064E00FE65FA /* ALBaseViewController+ALPullHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E70EBD511DAD064E00FE65FA /* ALBaseViewController+ALPullHeaderView.m */; };
 		E710B64F1D8F915700411E9B /* ALHomePageViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E710B64E1D8F915700411E9B /* ALHomePageViewModel.m */; };
 		E740EB3E1D8E39D400D2F1E4 /* ALNavigationStack.m in Sources */ = {isa = PBXBuildFile; fileRef = E740EB3D1D8E39D400D2F1E4 /* ALNavigationStack.m */; };
-		E75331711D8E749500600E76 /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = E75331701D8E749500600E76 /* Account.m */; };
 		E75331741D8E792C00600E76 /* ALViewControllerRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = E75331731D8E792C00600E76 /* ALViewControllerRouter.m */; };
 		E75331771D8E824200600E76 /* ALLoginViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E75331761D8E824200600E76 /* ALLoginViewModel.m */; };
 		E753317A1D8E90CA00600E76 /* ALModelServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E75331791D8E90CA00600E76 /* ALModelServiceImpl.m */; };
 		E753317E1D8EB94100600E76 /* SSKeychain+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = E753317D1D8EB94100600E76 /* SSKeychain+Util.m */; };
+		E775E7C41DAD1B9600230820 /* UINavigationBar+ALBackgroundColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E775E7C31DAD1B9600230820 /* UINavigationBar+ALBackgroundColor.m */; };
 		E7866E861D938FFA0079A78D /* ALTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7866E851D938FFA0079A78D /* ALTabBarController.m */; };
 		E7866E931D93BFC60079A78D /* ALNoramlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7866E921D93BFC60079A78D /* ALNoramlViewController.m */; };
 		E7866E961D93BFCF0079A78D /* ALSickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7866E951D93BFCF0079A78D /* ALSickViewController.m */; };
@@ -64,6 +67,12 @@
 /* Begin PBXFileReference section */
 		28F7A35A443FFF68F63AB6A4 /* Pods-ReactiveCocoaTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveCocoaTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveCocoaTest/Pods-ReactiveCocoaTest.debug.xcconfig"; sourceTree = "<group>"; };
 		99EE0D829C686C95E61522E6 /* libPods-ReactiveCocoaTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactiveCocoaTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E70EBD4A1DACD5F100FE65FA /* ALPullHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALPullHeaderView.h; sourceTree = "<group>"; };
+		E70EBD4B1DACD5F100FE65FA /* ALPullHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALPullHeaderView.m; sourceTree = "<group>"; };
+		E70EBD4D1DACEEF400FE65FA /* UITableView+ALPullHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+ALPullHeaderView.h"; sourceTree = "<group>"; };
+		E70EBD4E1DACEEF400FE65FA /* UITableView+ALPullHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+ALPullHeaderView.m"; sourceTree = "<group>"; };
+		E70EBD501DAD064E00FE65FA /* ALBaseViewController+ALPullHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALBaseViewController+ALPullHeaderView.h"; sourceTree = "<group>"; };
+		E70EBD511DAD064E00FE65FA /* ALBaseViewController+ALPullHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALBaseViewController+ALPullHeaderView.m"; sourceTree = "<group>"; };
 		E710B64D1D8F915700411E9B /* ALHomePageViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALHomePageViewModel.h; sourceTree = "<group>"; };
 		E710B64E1D8F915700411E9B /* ALHomePageViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALHomePageViewModel.m; sourceTree = "<group>"; };
 		E71EE6251D86B9CC009C31C2 /* ALConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALConstant.h; sourceTree = "<group>"; };
@@ -71,8 +80,6 @@
 		E740EB3C1D8E39D400D2F1E4 /* ALNavigationStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALNavigationStack.h; sourceTree = "<group>"; };
 		E740EB3D1D8E39D400D2F1E4 /* ALNavigationStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALNavigationStack.m; sourceTree = "<group>"; };
 		E753316C1D8E6FD900600E76 /* ALModelServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALModelServices.h; sourceTree = "<group>"; };
-		E753316F1D8E749500600E76 /* Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Account.h; sourceTree = "<group>"; };
-		E75331701D8E749500600E76 /* Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Account.m; sourceTree = "<group>"; };
 		E75331721D8E792C00600E76 /* ALViewControllerRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALViewControllerRouter.h; sourceTree = "<group>"; };
 		E75331731D8E792C00600E76 /* ALViewControllerRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALViewControllerRouter.m; sourceTree = "<group>"; };
 		E75331751D8E824200600E76 /* ALLoginViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALLoginViewModel.h; sourceTree = "<group>"; };
@@ -81,6 +88,8 @@
 		E75331791D8E90CA00600E76 /* ALModelServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALModelServiceImpl.m; sourceTree = "<group>"; };
 		E753317C1D8EB94100600E76 /* SSKeychain+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SSKeychain+Util.h"; sourceTree = "<group>"; };
 		E753317D1D8EB94100600E76 /* SSKeychain+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SSKeychain+Util.m"; sourceTree = "<group>"; };
+		E775E7C21DAD1B9600230820 /* UINavigationBar+ALBackgroundColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+ALBackgroundColor.h"; sourceTree = "<group>"; };
+		E775E7C31DAD1B9600230820 /* UINavigationBar+ALBackgroundColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+ALBackgroundColor.m"; sourceTree = "<group>"; };
 		E7866E841D938FFA0079A78D /* ALTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALTabBarController.h; sourceTree = "<group>"; };
 		E7866E851D938FFA0079A78D /* ALTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALTabBarController.m; sourceTree = "<group>"; };
 		E7866E911D93BFC60079A78D /* ALNoramlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALNoramlViewController.h; sourceTree = "<group>"; };
@@ -174,9 +183,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E70EBD461DACD54300FE65FA /* ALPullImageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E70EBD4A1DACD5F100FE65FA /* ALPullHeaderView.h */,
+				E70EBD4B1DACD5F100FE65FA /* ALPullHeaderView.m */,
+				E70EBD4D1DACEEF400FE65FA /* UITableView+ALPullHeaderView.h */,
+				E70EBD4E1DACEEF400FE65FA /* UITableView+ALPullHeaderView.m */,
+				E70EBD501DAD064E00FE65FA /* ALBaseViewController+ALPullHeaderView.h */,
+				E70EBD511DAD064E00FE65FA /* ALBaseViewController+ALPullHeaderView.m */,
+				E775E7C21DAD1B9600230820 /* UINavigationBar+ALBackgroundColor.h */,
+				E775E7C31DAD1B9600230820 /* UINavigationBar+ALBackgroundColor.m */,
+			);
+			path = ALPullImageViewController;
+			sourceTree = "<group>";
+		};
 		E71EE6211D86B8DF009C31C2 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				E70EBD461DACD54300FE65FA /* ALPullImageViewController */,
 				E753317B1D8EB92500600E76 /* Util */,
 				E71EE6251D86B9CC009C31C2 /* ALConstant.h */,
 				E71EE6261D86BA64009C31C2 /* ALConfig.h */,
@@ -346,8 +371,6 @@
 			children = (
 				E740EB3C1D8E39D400D2F1E4 /* ALNavigationStack.h */,
 				E740EB3D1D8E39D400D2F1E4 /* ALNavigationStack.m */,
-				E753316F1D8E749500600E76 /* Account.h */,
-				E75331701D8E749500600E76 /* Account.m */,
 				E7A1793C1D829491002AEB2C /* ALBaseModel.h */,
 				E7A1793D1D829491002AEB2C /* ALBaseModel.m */,
 				E7A915311D86CE2C0048B6FA /* ALModelProtrocl.h */,
@@ -641,6 +664,7 @@
 				E7866E991D93BFD70079A78D /* ALTopicViewController.m in Sources */,
 				E7A1793A1D82946F002AEB2C /* ALBaseViewController.m in Sources */,
 				E7D071A41D966D81008F15B5 /* ALRequestConfig.m in Sources */,
+				E70EBD4F1DACEEF400FE65FA /* UITableView+ALPullHeaderView.m in Sources */,
 				E7866E861D938FFA0079A78D /* ALTabBarController.m in Sources */,
 				E7866E931D93BFC60079A78D /* ALNoramlViewController.m in Sources */,
 				E7A179361D828DCB002AEB2C /* ALHomePageViewController.m in Sources */,
@@ -658,13 +682,15 @@
 				E7D071A71D98C093008F15B5 /* ALUserManager.m in Sources */,
 				E7866EAA1D93C6AC0079A78D /* ALNormalViewModel.m in Sources */,
 				E7A1793E1D829491002AEB2C /* ALBaseModel.m in Sources */,
+				E70EBD4C1DACD5F100FE65FA /* ALPullHeaderView.m in Sources */,
 				E7A179321D826AAD002AEB2C /* ALLoginViewController.m in Sources */,
 				E7D071A11D966D70008F15B5 /* ALNetworkEngine.m in Sources */,
+				E775E7C41DAD1B9600230820 /* UINavigationBar+ALBackgroundColor.m in Sources */,
 				E7866EB01D93C6C00079A78D /* ALTopicViewModel.m in Sources */,
 				E7D071AA1D98CD55008F15B5 /* ALNetWorkUrl.m in Sources */,
 				E7B6B3DA1D768D1800405C27 /* main.m in Sources */,
+				E70EBD521DAD064E00FE65FA /* ALBaseViewController+ALPullHeaderView.m in Sources */,
 				E740EB3E1D8E39D400D2F1E4 /* ALNavigationStack.m in Sources */,
-				E75331711D8E749500600E76 /* Account.m in Sources */,
 				E753317E1D8EB94100600E76 /* SSKeychain+Util.m in Sources */,
 				E7866EAD1D93C6B60079A78D /* ALSickViewModel.m in Sources */,
 			);

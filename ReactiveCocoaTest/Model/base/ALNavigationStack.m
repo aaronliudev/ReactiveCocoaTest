@@ -78,7 +78,7 @@
         @strongify(self);
         ALBaseViewController *vc = [[ALViewControllerRouter shareRouter] viewControllerForModel:tuple.first];
         if (![vc isKindOfClass:[UINavigationController class]]) {
-            vc = [[UINavigationController alloc] initWithRootViewController:vc];
+            vc = [[ALNavigationController alloc] initWithRootViewController:vc];
         }
         
         [self pushNavigationController:vc];
@@ -96,8 +96,8 @@
         [self clearNavigationControllers];
         ALBaseViewController *vc = [[ALViewControllerRouter shareRouter] viewControllerForModel:tuple.first];
         if (![vc isKindOfClass:[UINavigationController class]] &&
-            ![vc isKindOfClass:[UITabBarController class]]) {
-            vc = [[UINavigationController alloc] initWithRootViewController:vc];
+            ![vc isKindOfClass:[ALTabBarController class]]) {
+            vc = [[ALNavigationController alloc] initWithRootViewController:vc];
             [self pushNavigationController:(UINavigationController *)vc];
         }
         ALMainWindow.rootViewController = vc;
