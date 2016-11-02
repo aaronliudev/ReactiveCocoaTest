@@ -10,8 +10,13 @@
 
 @interface ALBaseViewController (ALPullHeaderView)
 
-- (void)configHeaderViewWith:(UITableView *)tableView;
+///
+- (void)configHeaderView:(UITableView *)tableView;
+
+/// set headerView image url.
 - (void)configHeaderImageUrl:(NSString *)imageurl;
+
+/// set headerView image.
 - (void)configHeaderImage:(UIImage *)image;
 
 @end

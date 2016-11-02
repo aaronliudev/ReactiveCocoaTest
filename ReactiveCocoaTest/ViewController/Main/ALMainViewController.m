@@ -7,9 +7,10 @@
 //
 
 #import "ALMainViewController.h"
-//#import "UITableView+ALPullHeaderView.h"
 #import "ALBaseViewController+ALPullHeaderView.h"
 #import "UINavigationBar+ALBackgroundColor.h"
+
+#import "ALMain2ViewController.h"
 
 @interface ALMainViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -19,40 +20,34 @@
 
 @implementation ALMainViewController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.al_navigationBarColor = [UIColor redColor];
+    
+    [self scrollViewDidScroll:self.contentView];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    
-    
-    
     
     [self.view addSubview:self.contentView];
-    [self configHeaderViewWith:self.contentView];
-//    [self configHeaderImageUrl:@"https://avatars.githubusercontent.com/u/17328307?v=3"];
+    
+    [self configHeaderView:self.contentView];
     [self configHeaderImage:[UIImage imageNamed:@"123"]];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:nil];
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:nil];
+    self.title = @"123456";
+
+//    self.navigationController.navigationBar.al_isShowStatusBar = YES;
+//    self.navigationController.navigationBar.al_maxOffsetY = 300;
     self.navigationController.navigationBar.al_navigationBarStyle = ALNavigationBarScrolling;
+    
     
     // Do any additional setup after loading the view.
 }
-
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    UIColor *color = [UIColor colorWithRed:0/255.0 green:175/255.0 blue:240/255.0 alpha:1];
-//    CGFloat offsetY = scrollView.contentOffset.y;
-//    if (offsetY > 50) {
-//        CGFloat alpha = MIN(1, 1 - ((50 + 64 - offsetY) / 64));
-//        [self.navigationController.navigationBar al_setBackgroundColor:[color colorWithAlphaComponent:alpha]];
-//    } else {
-//        [self.navigationController.navigationBar al_setBackgroundColor:[color colorWithAlphaComponent:0]];
-//        NSLog(@"~~~~~~~~~~~~~~~~~~~~~~~");
-//    }
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -81,6 +76,11 @@
     return 200;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ALMain2ViewController *main2 = [[ALMain2ViewController alloc] init];
+    [self.navigationController pushViewController:main2 animated:YES];
+}
 
 - (UITableView *)contentView
 {

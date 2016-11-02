@@ -10,62 +10,45 @@
 #import <objc/Object.h>
 
 #define ALNavigationBarHeight 64
-#define ALNavigationBarWithoutStatusBarHeight 64
+#define ALNavigationBarWithoutStatusBarHeight 44
+
+#define ALNavigationScrollingMaxOffsetY 200
 
 
 typedef NS_ENUM(NSUInteger, ALNavigationBarScrollingDirection) {
     ALNavigationBarScrollingDirectionUp = 0,
-    ALNavigationBarScrollingDirectionDown,
+    ALNavigationBarScrollingDirectionDown
 };
 
 @interface UINavigationBar ()
 
-///
-@property (nonatomic, strong) UIView *al_overView;
+/// the view add in the navigation bar, index = 0.
+@property (nonatomic, strong) UIView *al_barView;
 
 /// last offset，user this to check to show or hide the navigation bar
-@property (nonatomic, assign) CGFloat al_lastDownY;
-@property (nonatomic, assign) CGFloat al_lastUpY;
 @property (nonatomic, assign) CGFloat al_lastOffsetY;
-/// use lastOffsetY to check the value. if is true, the navigation bar will show. default is NO
-@property (nonatomic, assign) BOOL al_isScrolling;
 /// scrolling up turn to down, vice versa. Default is NO
 @property (nonatomic, assign) ALNavigationBarScrollingDirection al_scrollingDirection;
+///
+@property (nonatomic, assign) CGFloat al_progress;
 
 @end
 
-static char KNvaigationBarBgColorKey;
-static char KOverViewKey;
-static char KIsShowStatusBarKey;
-static char KActionTimeKey;
-static char KLastUpYKey;
-static char KLastDownYKey;
-static char KLastOffsetYKey;
-static char KWillShowKey;
-static char KNavigationBarStyleKey;
-static char KScrollingDirectionKey;
+static char ALNavigationBarViewKey;
+static char ALNavigationBarBgColorKey;
+static char ALLastOffsetYKey;
+static char ALNavigationBarStyleKey;
+static char ALScrollingDirectionKey;
+static char ALNavigationBarProgressKey;
+static char ALScrollingMaxOffsetYKey;
 
 @implementation UINavigationBar (ALBackgroundColor)
 
-- (void)al_setBarBackgroundColor:(UIColor *)bgColor
-{
-    if (!self.al_overView) {
-        [self setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-        self.al_overView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) + 20)];
-        self.al_overView.userInteractionEnabled = NO;
-        self.al_overView.autoresizingMask = UIViewAutoresizingFlexibleWidth;    // Should not set `UIViewAutoresizingFlexibleHeight`
-        [[self.subviews firstObject] insertSubview:self.al_overView atIndex:0];
-    }
-    self.al_overView.backgroundColor = bgColor;
-}
-
+// MARK: - Publick Method
 - (void)al_setBarTranslationWithOffsetY:(CGFloat)offsetY
 {
-    CGFloat tempOffsetY = [self al_navigationBarHeight];
-    CGFloat progress = 0;
-    
-    
-    switch (self.al_navigationBarStyle) {
+    switch (self.al_navigationBarStyle)
+    {
         case ALNavigationBarDefault:
         {
             [self al_navigationBarMoveDefault:offsetY];
@@ -76,390 +59,238 @@ static char KScrollingDirectionKey;
             [self al_navigationBarScrolling:offsetY];
         }
             break;
-        case ALNavigationBarMoveAnimate:
-        {
-            [self al_navigationBarMoveAnimate:offsetY];
-        }
-            break;
         default:
             break;
     }
+}
+
+/// when `viewWillDisappeare:` must call this, reset all value.
+- (void)al_resetNavigationBar
+{
+    [self setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    self.al_progress = 0;
+    [self al_setNavigationBartranslationProgress:0];
     
-//    if (offsetY > 0) {
-//        
-//        if (self.moveHiddenShow) {
-//            [self al_setBarTranslationAnimate:offsetY];
-//            self.lastOffsetY = offsetY;
-//            return;
-//        }
-//        
-//        if (offsetY >= tempOffsetY) {
-//            progress = 1;
-//        }
-//        else {
-//            progress = (offsetY / tempOffsetY);
-//        }
-//    }
-//    else {
-//        progress = 0;
-//    }
-//    [self al_setNavigationBartranslationProgress:progress];
-//    self.lastOffsetY = offsetY;
-    
+    [self.al_barView removeFromSuperview];
+    self.al_barView = nil;
 }
 
 - (void)al_navigationBarMoveDefault:(CGFloat)offsetY
 {
-    CGFloat tempOffsetY = [self al_navigationBarHeight];
     CGFloat progress = 0;
-    if (offsetY > 0) {
-        
-        if (offsetY >= tempOffsetY) {
-            progress = 1;
-        }
-        else {
-            progress = (offsetY / tempOffsetY);
-        }
-    }
-    else {
+    CGFloat diffY = offsetY - self.al_maxOffsetY;
+    if (offsetY < self.al_maxOffsetY) {
         progress = 0;
     }
-    [self al_setNavigationBartranslationProgress:progress];
-}
-
-// animate
-- (void)al_navigationBarMoveAnimate:(CGFloat)offsetY
-{
-    if (offsetY < [self al_navigationBarHeight]) {
-        [self al_setNavigationBartranslationProgress:0];
-        self.al_lastOffsetY = offsetY;
-        return;
+    else if (diffY < ALNavigationBarHeight)
+    {
+        progress = MIN(MAX(diffY / ALNavigationBarHeight, 0), 1);
     }
-    NSTimeInterval duration = self.al_actionTime ? self.al_actionTime : 0.3;
-    BOOL isScrolling = [self al_checkShowNavigationOrHide:offsetY];
-    self.al_lastOffsetY = offsetY;
-    if (self.al_isScrolling == isScrolling) {
-        return;
+    else
+    {
+        progress = 1;
     }
-    [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-        if (self.al_isScrolling) {
-            [self al_setNavigationBartranslationProgress:1];
-        }
-        else {
-            [self al_setNavigationBartranslationProgress:0];
-        }
-        self.al_isScrolling = isScrolling;
-        
-    } completion:^(BOOL finished) {
-        
-    }];
+    
+    [self al_hideNavigationBar:progress];
 }
 
 - (void)al_navigationBarScrolling:(CGFloat)offsetY
 {
-    CGFloat barheight = [self al_navigationBarHeight];
-    CGFloat progress = 0;
-    
-//    self.al_changedScrollDirection = offsetY - self.al_lastOffsetY;
     if (offsetY > 0) {
+        CGFloat barheight = ALNavigationBarHeight;
+        CGFloat value = offsetY - self.al_lastOffsetY;
+        CGFloat absY = fabs(value);
         
-        if (offsetY > self.al_lastOffsetY) {
+        if (self.al_scrollingDirection == ALNavigationBarScrollingDirectionUp)
+        {
+            CGFloat progress = self.al_progress + absY / barheight;
+            self.al_progress = MIN(1, MAX(0, progress));
+        }
+        else {
+            
+            CGFloat progress = self.al_progress - absY / barheight;
+            self.al_progress = MAX(0, MIN(1, progress));
+        }
+        
+        NSLog(@"progress = %.2f",self.al_progress);
+        if (offsetY > self.al_lastOffsetY)
+        {
             self.al_scrollingDirection = ALNavigationBarScrollingDirectionUp;
         }
-        else {
+        else
+        {
             self.al_scrollingDirection = ALNavigationBarScrollingDirectionDown;
         }
-        
         self.al_lastOffsetY = offsetY;
-        
-        if (self.al_scrollingDirection == ALNavigationBarScrollingDirectionUp) {
-            
-            if (self.al_lastUpY > 0) {
-                
-                if (offsetY - self.al_lastUpY >= barheight) {
-                    progress = 1;
-                    self.al_lastDownY = 0;
-                }
-                else {
-                    if (self.al_lastDownY) {
-                        progress = 1 - fabs(offsetY - self.al_lastUpY) / barheight;
-                    }
-                    else
-                        progress = fabs(offsetY - self.al_lastUpY) / barheight;
-                }
-            }
-            else {
-                if (fabs(offsetY - self.al_lastDownY) >= barheight || self.al_lastDownY == 0) {
-                    self.al_lastUpY = offsetY;
-                    self.al_lastDownY = 0;
-                }
-                else {
-                    if (self.al_lastDownY) {
-                        progress = 1 - fabs(offsetY - self.al_lastDownY) / barheight;
-                        self.al_lastUpY = self.al_lastDownY;
-                    }
-                    else {
-                        progress = fabs(offsetY - self.al_lastUpY) / barheight;
-                        
-                    }
-                }
-                return;
-            }
-            
-        }
-        else {
-            
-            if (self.al_lastDownY > 0) {
-                
-                if (self.al_lastDownY - offsetY >= barheight) {
-                    progress = 0;
-                    self.al_lastUpY = 0;
-                }
-                else {
-                    if (self.al_lastUpY) {
-                        progress = fabs(self.al_lastDownY - offsetY) / barheight;
-                    }
-                    else {
-                        progress = 1 - fabs(offsetY - self.al_lastDownY) / barheight;
-                    }
-                }
-            }
-            else {
-                if (fabs(offsetY - self.al_lastUpY) > barheight || self.al_lastUpY == 0) {
-                    
-                    self.al_lastDownY = offsetY;
-                    self.al_lastUpY = 0;
-                }
-                else {
-                    if (self.al_lastUpY) {
-                        progress = fabs(self.al_lastDownY - offsetY) / barheight;
-                        self.al_lastDownY = self.al_lastUpY;
-                    }
-                    else
-                        progress = 1 - fabs(self.al_lastDownY - offsetY) / barheight;
-                }
-                
-                
-                
-                return;
-            }
-            
-        }
     }
     else
-        progress = 0;
+        self.al_progress = 0;
     
-    [self al_setNavigationBartranslationProgress:progress];
+    [self al_setNavigationBartranslationProgress:self.al_progress];
 }
-
-
-- (BOOL)chekoutScrolling:(CGFloat)offsetY
-{
-    if (offsetY > 0) {
-        
-        
-        
-        return offsetY > self.al_lastOffsetY;
-    }
-    else {
-        return YES;
-    }
-}
-
-- (void)al_resetNavigationBar
-{
-    [self setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
-    [self.al_overView removeFromSuperview];
-    self.al_overView = nil;
-}
-
 
 // MARK: - Private Method
-- (void)al_setBarTranslationAnimate:(CGFloat)offsetY
+- (void)al_setBarBackgroundColor:(UIColor *)bgColor
 {
-    
-    
-//    if (1) {
-//        if (offsetY >= [self al_navigationBarHeight]) {
-//            [self al_setNavigationBartranslationProgress:((offsetY - self.al_lastOffsetY)) / [self al_navigationBarHeight]];
-//        }
-//        
-//        
-//    }
-//    else {
-//        NSTimeInterval duration = self.al_actionTime ? self.al_actionTime : 0.3;
-//        BOOL willShow = [self al_checkShowNavigationOrHide:offsetY];
-//        if (self.willShow == willShow) {
-//            return;
-//        }
-//        [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-//            if (self.willShow) {
-//                [self al_setNavigationBartranslationProgress:1];
-//            }
-//            else {
-//                [self al_setNavigationBartranslationProgress:0];
-//            }
-//            self.willShow = willShow;
-//        } completion:^(BOOL finished) {
-//            
-//        }];
-//    }
+    if (!self.al_barView)
+    {
+        // 
+        [self setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+        [self setShadowImage:[UIImage new]];
+        self.al_barView = [[UIView alloc] initWithFrame:CGRectMake(0, 
+                                                                   0,
+                                                                   CGRectGetWidth(self.bounds), 
+                                                                   [self al_navigationBarHeight])];
+        self.al_barView.userInteractionEnabled = NO;
+        self.al_barView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [[self.subviews firstObject] insertSubview:self.al_barView atIndex:0];
+    }
+    self.al_barView.backgroundColor = bgColor;
 }
 
-/// 根据progress移动
+/// progress
 - (void)al_setNavigationBartranslationProgress:(CGFloat)progress
 {
-    CGFloat navigationBarHeight = [self al_navigationBarHeight];
-    CGFloat offsetY = -navigationBarHeight * progress;
+    CGFloat navigationBarHeight = ALNavigationBarWithoutStatusBarHeight;
+    CGFloat offsetY = -(navigationBarHeight * progress);
     [self al_setBarTranslationY: offsetY];
     [self al_setBarTranslationBackgroundAlpha:(1 - progress)];
 }
 
+//
 - (void)al_setBarTranslationY:(CGFloat)translationY
 {
     self.transform = CGAffineTransformMakeTranslation(0, translationY);
 }
 
+// set alpha
 - (void)al_setBarTranslationBackgroundAlpha:(CGFloat)alpha
 {
+    // set leftItems
     [[self valueForKey:@"_leftViews"] enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         obj.alpha = alpha;
     }];
     
+    // set rightItems
     [[self valueForKey:@"_rightViews"] enumerateObjectsUsingBlock:^(UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         obj.alpha = alpha;
     }];
     
+    // set title view
     ((UIView *)[self valueForKey:@"_titleView"]).alpha = alpha;
+    [[self subviews] enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isKindOfClass:NSClassFromString(@"UINavigationItemView")]) {
+            obj.alpha = alpha;
+            *stop = YES;
+        }
+    }];
     
+    //
+    if (ALNavigationBarDefault == self.al_navigationBarStyle)
+    {
+        [self al_hideNavigationBar:alpha];
+    }
+}
+
+// set al_barView alpha
+- (void)al_hideNavigationBar:(CGFloat)alpha
+{
     [[self subviews] objectAtIndex:0].alpha = alpha;
 }
 
 // navigation bar height
 - (CGFloat)al_navigationBarHeight
 {
-    return self.al_isShowStatusBar ? ALNavigationBarWithoutStatusBarHeight : ALNavigationBarHeight;
+    return [self al_isShowStatusBar] ? ALNavigationBarWithoutStatusBarHeight : ALNavigationBarHeight;
 }
-
-- (BOOL)al_checkShowNavigationOrHide:(CGFloat)offsetY
-{
-    BOOL isShow = NO;
-    if (offsetY <= [self al_navigationBarHeight]) {
-        isShow = YES;
-    }
-    else if (offsetY > self.al_lastOffsetY) {
-        isShow = NO;
-    }
-    else {
-        isShow = YES;
-    }
-    
-    return isShow;
-}
-
-
 
 // MARK: - Set & Get Method
-// MARK: Private Property
-- (void)setAl_lastUpY:(CGFloat)al_lastUpY
-{
-    objc_setAssociatedObject(self, &KLastUpYKey, @(al_lastUpY), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (CGFloat)al_lastUpY
-{
-    return [objc_getAssociatedObject(self, &KLastUpYKey) floatValue];
-}
-
-- (void)setAl_lastDownY:(CGFloat)al_lastDownY
-{
-    objc_setAssociatedObject(self, &KLastDownYKey, @(al_lastDownY), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (CGFloat)al_lastDownY
-{
-    return [objc_getAssociatedObject(self, &KLastDownYKey) floatValue];
-}
-
-- (void)setAl_lastOffsetY:(CGFloat)al_lastOffsetY
-{
-    objc_setAssociatedObject(self, &KLastOffsetYKey, @(al_lastOffsetY), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (CGFloat)al_lastOffsetY
-{
-    return [objc_getAssociatedObject(self, &KLastOffsetYKey) floatValue];
-}
-
-- (void)setAl_isScrolling:(BOOL)al_isScrolling
-{
-    objc_setAssociatedObject(self, &KWillShowKey, @(al_isScrolling), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (BOOL)al_isScrolling
-{
-    return [objc_getAssociatedObject(self, &KWillShowKey) boolValue];
-}
-
-- (UIView *)al_overView
-{
-    return objc_getAssociatedObject(self, &KOverViewKey);
-}
-
-- (void)setAl_overView:(UIView *)al_overView
-{
-    objc_setAssociatedObject(self, &KOverViewKey, al_overView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (void)setAl_scrollingDirection:(ALNavigationBarScrollingDirection)al_scrollingDirection
-{
-    objc_setAssociatedObject(self, &KScrollingDirectionKey, @(al_scrollingDirection), OBJC_ASSOCIATION_ASSIGN);
-}
-
-- (ALNavigationBarScrollingDirection)al_scrollingDirection
-{
-    return [objc_getAssociatedObject(self, &KScrollingDirectionKey) boolValue];
-}
-
 // MARK: Public Property
-- (UIColor *)navigationBar_backgroundColor
+- (UIColor *)al_navigationBarColor
 {
-    return objc_getAssociatedObject(self, &KNvaigationBarBgColorKey);
+    return objc_getAssociatedObject(self, &ALNavigationBarBgColorKey);
 }
 
-- (void)setNavigationBar_backgroundColor:(UIColor *)navigationBar_backgroundColor
+- (void)setAl_navigationBarColor:(UIColor *)al_navigationBarColor
 {
-    objc_setAssociatedObject(self, &KNvaigationBarBgColorKey, navigationBar_backgroundColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &ALNavigationBarBgColorKey, al_navigationBarColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self al_setBarBackgroundColor:al_navigationBarColor];
 }
 
+// show status bar
 - (BOOL)al_isShowStatusBar
 {
-    return [objc_getAssociatedObject(self, &KIsShowStatusBarKey) boolValue];
+    return [UIApplication sharedApplication].statusBarHidden;
 }
 
-- (void)setAl_isShowStatusBar:(BOOL)al_isShowStatusBar
-{
-    objc_setAssociatedObject(self, &KIsShowStatusBarKey, @(al_isShowStatusBar), OBJC_ASSOCIATION_ASSIGN);
-}
-
-- (void)setAl_actionTime:(NSTimeInterval)al_actionTime
-{
-    objc_setAssociatedObject(self, &KActionTimeKey, @(al_actionTime), OBJC_ASSOCIATION_ASSIGN);
-}
-
-- (NSTimeInterval)al_actionTime
-{
-    return [objc_getAssociatedObject(self, &KActionTimeKey) floatValue];
-}
 
 - (void)setAl_navigationBarStyle:(ALNavigationBarMoveStyle)al_navigationBarStyle
 {
-    objc_setAssociatedObject(self, &KNavigationBarStyleKey, @(al_navigationBarStyle), OBJC_ASSOCIATION_ASSIGN);
+    if (al_navigationBarStyle == ALNavigationBarDefault) {
+        [self al_hideNavigationBar:0];
+    }
+    objc_setAssociatedObject(self, &ALNavigationBarStyleKey, @(al_navigationBarStyle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (ALNavigationBarMoveStyle)al_navigationBarStyle
 {
-    return [objc_getAssociatedObject(self, &KNavigationBarStyleKey) integerValue];
+    return [objc_getAssociatedObject(self, &ALNavigationBarStyleKey) integerValue];
+}
+
+- (void)setAl_maxOffsetY:(CGFloat)al_maxOffsetY
+{
+    objc_setAssociatedObject(self, &ALScrollingMaxOffsetYKey, @(al_maxOffsetY), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGFloat)al_maxOffsetY
+{
+    CGFloat maxOffsetY = [objc_getAssociatedObject(self, &ALScrollingMaxOffsetYKey) floatValue];
+    if (maxOffsetY <= 0) {
+        maxOffsetY = ALNavigationScrollingMaxOffsetY;
+    }
+    return maxOffsetY;
+}
+
+// MARK: Private Property
+- (void)setAl_lastOffsetY:(CGFloat)al_lastOffsetY
+{
+    objc_setAssociatedObject(self, &ALLastOffsetYKey, @(al_lastOffsetY), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGFloat)al_lastOffsetY
+{
+    return [objc_getAssociatedObject(self, &ALLastOffsetYKey) floatValue];
+}
+
+- (void)setAl_barView:(UIView *)al_barView
+{
+    objc_setAssociatedObject(self, &ALNavigationBarViewKey, al_barView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (UIView *)al_barView
+{
+    return objc_getAssociatedObject(self, &ALNavigationBarViewKey);
+}
+
+// 滑动方向
+- (void)setAl_scrollingDirection:(ALNavigationBarScrollingDirection)al_scrollingDirection
+{
+    objc_setAssociatedObject(self, &ALScrollingDirectionKey, @(al_scrollingDirection), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (ALNavigationBarScrollingDirection)al_scrollingDirection
+{
+    return [objc_getAssociatedObject(self, &ALScrollingDirectionKey) integerValue];
+}
+
+- (void)setAl_progress:(CGFloat)al_progress
+{
+    objc_setAssociatedObject(self, &ALNavigationBarProgressKey, @(al_progress), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGFloat)al_progress
+{
+    return [objc_getAssociatedObject(self, &ALNavigationBarProgressKey) doubleValue];
 }
 
 @end

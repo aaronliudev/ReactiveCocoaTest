@@ -18,7 +18,21 @@
 
 @implementation ALBaseViewController (ALPullHeaderView)
 
-- (void)configHeaderViewWith:(UITableView *)tableView
+// MARK: - View Cycle
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    // reset navigation bar
+    [self.navigationController.navigationBar al_resetNavigationBar];
+}
+
+// MARK: - Publick Method
+- (void)configHeaderView:(UITableView *)tableView
 {
     tableView.tableHeaderView = self.headerView;
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -34,36 +48,16 @@
     self.headerView.image = image;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-//    [self.navigationController.navigationBar al_setBarBackgroundColor:[UIColor clearColor]];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar al_resetNavigationBar];
-}
-
+// MARK: - ScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGPoint offset = scrollView.contentOffset;
+    // set header view frame
     self.headerView.contentOffset = offset;
     
-    UIColor * color = [UIColor colorWithRed:0/255.0 green:175/255.0 blue:240/255.0 alpha:1];
+    // set navigation bar translatioin
     CGFloat offsetY = scrollView.contentOffset.y;
-    
     [self.navigationController.navigationBar al_setBarTranslationWithOffsetY:offsetY];
-//    if (offsetY > 50) {
-//        CGFloat alpha = MIN(1, 1 - ((50 + 64 - offsetY) / 64));
-//        [self.navigationController.navigationBar al_setBarBackgroundColor:[color colorWithAlphaComponent:alpha]];
-////        [[self.navigationController.navigationBar subviews] objectAtIndex:0].alpha = alpha;
-//    } else {
-//        [self.navigationController.navigationBar al_setBarBackgroundColor:[color colorWithAlphaComponent:0]];
-////        [[self.navigationController.navigationBar subviews] objectAtIndex:0].alpha = 0;
-//    }
 }
 
 #pragma mark - Get Method

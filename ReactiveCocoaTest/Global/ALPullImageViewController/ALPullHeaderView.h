@@ -12,6 +12,7 @@
 
 @property (nonatomic, copy) NSString *imageUrl;
 @property (nonatomic, strong) UIImage *image;
+/// tableview content offset
 @property (nonatomic, assign) CGPoint contentOffset;
 
 @end

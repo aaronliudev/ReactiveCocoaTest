@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		7A11CE50782F76A319CED4BD /* libPods-ReactiveCocoaTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99EE0D829C686C95E61522E6 /* libPods-ReactiveCocoaTest.a */; };
 		E70EBD4C1DACD5F100FE65FA /* ALPullHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E70EBD4B1DACD5F100FE65FA /* ALPullHeaderView.m */; };
-		E70EBD4F1DACEEF400FE65FA /* UITableView+ALPullHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E70EBD4E1DACEEF400FE65FA /* UITableView+ALPullHeaderView.m */; };
 		E70EBD521DAD064E00FE65FA /* ALBaseViewController+ALPullHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E70EBD511DAD064E00FE65FA /* ALBaseViewController+ALPullHeaderView.m */; };
 		E710B64F1D8F915700411E9B /* ALHomePageViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E710B64E1D8F915700411E9B /* ALHomePageViewModel.m */; };
 		E740EB3E1D8E39D400D2F1E4 /* ALNavigationStack.m in Sources */ = {isa = PBXBuildFile; fileRef = E740EB3D1D8E39D400D2F1E4 /* ALNavigationStack.m */; };
@@ -41,6 +40,8 @@
 		E7B6B3E81D768D1800405C27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7B6B3E61D768D1800405C27 /* LaunchScreen.storyboard */; };
 		E7B6B3F31D768D1800405C27 /* ReactiveCocoaTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B6B3F21D768D1800405C27 /* ReactiveCocoaTestTests.m */; };
 		E7B6B3FE1D768D1800405C27 /* ReactiveCocoaTestUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B6B3FD1D768D1800405C27 /* ReactiveCocoaTestUITests.m */; };
+		E7C59BAF1DC9C2B40084AFF8 /* ALMain2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7C59BAE1DC9C2B40084AFF8 /* ALMain2ViewController.m */; };
+		E7C59BB51DC9DBCD0084AFF8 /* UIBarButtonItem+ALAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = E7C59BB41DC9DBCD0084AFF8 /* UIBarButtonItem+ALAdd.m */; };
 		E7D071A11D966D70008F15B5 /* ALNetworkEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = E7D071A01D966D70008F15B5 /* ALNetworkEngine.m */; };
 		E7D071A41D966D81008F15B5 /* ALRequestConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = E7D071A31D966D81008F15B5 /* ALRequestConfig.m */; };
 		E7D071A71D98C093008F15B5 /* ALUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E7D071A61D98C093008F15B5 /* ALUserManager.m */; };
@@ -69,8 +70,6 @@
 		99EE0D829C686C95E61522E6 /* libPods-ReactiveCocoaTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactiveCocoaTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E70EBD4A1DACD5F100FE65FA /* ALPullHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALPullHeaderView.h; sourceTree = "<group>"; };
 		E70EBD4B1DACD5F100FE65FA /* ALPullHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALPullHeaderView.m; sourceTree = "<group>"; };
-		E70EBD4D1DACEEF400FE65FA /* UITableView+ALPullHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+ALPullHeaderView.h"; sourceTree = "<group>"; };
-		E70EBD4E1DACEEF400FE65FA /* UITableView+ALPullHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+ALPullHeaderView.m"; sourceTree = "<group>"; };
 		E70EBD501DAD064E00FE65FA /* ALBaseViewController+ALPullHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALBaseViewController+ALPullHeaderView.h"; sourceTree = "<group>"; };
 		E70EBD511DAD064E00FE65FA /* ALBaseViewController+ALPullHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALBaseViewController+ALPullHeaderView.m"; sourceTree = "<group>"; };
 		E710B64D1D8F915700411E9B /* ALHomePageViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALHomePageViewModel.h; sourceTree = "<group>"; };
@@ -137,6 +136,10 @@
 		E7B6B3F91D768D1800405C27 /* ReactiveCocoaTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactiveCocoaTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7B6B3FD1D768D1800405C27 /* ReactiveCocoaTestUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReactiveCocoaTestUITests.m; sourceTree = "<group>"; };
 		E7B6B3FF1D768D1800405C27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E7C59BAD1DC9C2B40084AFF8 /* ALMain2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALMain2ViewController.h; sourceTree = "<group>"; };
+		E7C59BAE1DC9C2B40084AFF8 /* ALMain2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALMain2ViewController.m; sourceTree = "<group>"; };
+		E7C59BB31DC9DBCD0084AFF8 /* UIBarButtonItem+ALAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+ALAdd.h"; sourceTree = "<group>"; };
+		E7C59BB41DC9DBCD0084AFF8 /* UIBarButtonItem+ALAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+ALAdd.m"; sourceTree = "<group>"; };
 		E7D0719F1D966D70008F15B5 /* ALNetworkEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALNetworkEngine.h; sourceTree = "<group>"; };
 		E7D071A01D966D70008F15B5 /* ALNetworkEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALNetworkEngine.m; sourceTree = "<group>"; };
 		E7D071A21D966D81008F15B5 /* ALRequestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALRequestConfig.h; sourceTree = "<group>"; };
@@ -188,12 +191,12 @@
 			children = (
 				E70EBD4A1DACD5F100FE65FA /* ALPullHeaderView.h */,
 				E70EBD4B1DACD5F100FE65FA /* ALPullHeaderView.m */,
-				E70EBD4D1DACEEF400FE65FA /* UITableView+ALPullHeaderView.h */,
-				E70EBD4E1DACEEF400FE65FA /* UITableView+ALPullHeaderView.m */,
 				E70EBD501DAD064E00FE65FA /* ALBaseViewController+ALPullHeaderView.h */,
 				E70EBD511DAD064E00FE65FA /* ALBaseViewController+ALPullHeaderView.m */,
 				E775E7C21DAD1B9600230820 /* UINavigationBar+ALBackgroundColor.h */,
 				E775E7C31DAD1B9600230820 /* UINavigationBar+ALBackgroundColor.m */,
+				E7C59BB31DC9DBCD0084AFF8 /* UIBarButtonItem+ALAdd.h */,
+				E7C59BB41DC9DBCD0084AFF8 /* UIBarButtonItem+ALAdd.m */,
 			);
 			path = ALPullImageViewController;
 			sourceTree = "<group>";
@@ -223,6 +226,8 @@
 			children = (
 				E7866E9D1D93BFE80079A78D /* ALMainViewController.h */,
 				E7866E9E1D93BFE80079A78D /* ALMainViewController.m */,
+				E7C59BAD1DC9C2B40084AFF8 /* ALMain2ViewController.h */,
+				E7C59BAE1DC9C2B40084AFF8 /* ALMain2ViewController.m */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -664,11 +669,11 @@
 				E7866E991D93BFD70079A78D /* ALTopicViewController.m in Sources */,
 				E7A1793A1D82946F002AEB2C /* ALBaseViewController.m in Sources */,
 				E7D071A41D966D81008F15B5 /* ALRequestConfig.m in Sources */,
-				E70EBD4F1DACEEF400FE65FA /* UITableView+ALPullHeaderView.m in Sources */,
 				E7866E861D938FFA0079A78D /* ALTabBarController.m in Sources */,
 				E7866E931D93BFC60079A78D /* ALNoramlViewController.m in Sources */,
 				E7A179361D828DCB002AEB2C /* ALHomePageViewController.m in Sources */,
 				E710B64F1D8F915700411E9B /* ALHomePageViewModel.m in Sources */,
+				E7C59BB51DC9DBCD0084AFF8 /* UIBarButtonItem+ALAdd.m in Sources */,
 				E75331741D8E792C00600E76 /* ALViewControllerRouter.m in Sources */,
 				E7866EB61D93C6D40079A78D /* ALMainViewModel.m in Sources */,
 				E7866E9F1D93BFE80079A78D /* ALMainViewController.m in Sources */,
@@ -683,6 +688,7 @@
 				E7866EAA1D93C6AC0079A78D /* ALNormalViewModel.m in Sources */,
 				E7A1793E1D829491002AEB2C /* ALBaseModel.m in Sources */,
 				E70EBD4C1DACD5F100FE65FA /* ALPullHeaderView.m in Sources */,
+				E7C59BAF1DC9C2B40084AFF8 /* ALMain2ViewController.m in Sources */,
 				E7A179321D826AAD002AEB2C /* ALLoginViewController.m in Sources */,
 				E7D071A11D966D70008F15B5 /* ALNetworkEngine.m in Sources */,
 				E775E7C41DAD1B9600230820 /* UINavigationBar+ALBackgroundColor.m in Sources */,
